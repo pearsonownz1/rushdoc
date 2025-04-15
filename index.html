@@ -2,9 +2,57 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <meta name="description" content="RushDoc.com offers quick and simple online legal document services, including wills, trusts, and divorce questionnaires." />
+    <title>RushDoc.com - Fast & Easy Legal Document Services</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LegalService",
+      "name": "RushDoc.com",
+      "description": "Fast & Affordable Online Legal Documents for Trusts, Wills, and Uncontested Divorces.",
+      "url": "http://localhost:5173/", // Replace with actual domain when deployed
+      "logo": "/logo.png", // Updated to use actual logo
+      "priceRange": "$", // General indication, adjust if needed
+      "telephone": "+1-XXX-XXX-XXXX", // Replace with actual phone number if available
+      "address": { // Replace with actual address if applicable, otherwise remove
+        "@type": "PostalAddress",
+        "streetAddress": "123 Main St",
+        "addressLocality": "Anytown",
+        "addressRegion": "CA",
+        "postalCode": "90210",
+        "addressCountry": "US"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Legal Document Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Estate Planning (Trusts)"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Estate Planning (Wills)"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Uncontested Divorce"
+            }
+          }
+        ]
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

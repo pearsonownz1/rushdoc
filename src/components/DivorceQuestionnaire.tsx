@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   Card,
   CardContent,
@@ -69,13 +70,13 @@ const DivorceQuestionnaire = ({
   });
 
   const steps = [
-    { id: "qualification", title: "Qualification" },
-    { id: "personal-info", title: "Personal Information" },
-    { id: "marriage-info", title: "Marriage Information" },
-    { id: "children-info", title: "Children Information" },
-    { id: "property-info", title: "Property Information" },
-    { id: "filing-info", title: "Filing Information" },
-    { id: "review", title: "Review" },
+    { id: "qualification", label: "Qualification" },
+    { id: "personal-info", label: "Personal Information" },
+    { id: "marriage-info", label: "Marriage Information" },
+    { id: "children-info", label: "Children Information" },
+    { id: "property-info", label: "Property Information" },
+    { id: "filing-info", label: "Filing Information" },
+    { id: "review", label: "Review" },
   ];
 
   const handleInputChange = (
@@ -83,13 +84,20 @@ const DivorceQuestionnaire = ({
     field: string,
     value: string | boolean,
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [section]: {
-        ...prev[section as keyof typeof prev],
-        [field]: value,
-      },
-    }));
+    setFormData((prev) => {
+      const sectionKey = section as keyof typeof prev;
+      // Ensure the section exists and is an object before spreading
+      const currentSection = typeof prev[sectionKey] === 'object' && prev[sectionKey] !== null
+        ? prev[sectionKey]
+        : {};
+      return {
+        ...prev,
+        [sectionKey]: {
+          ...currentSection,
+          [field]: value,
+        },
+      };
+    });
   };
 
   const handleRadioChange = (field: string, value: string) => {
@@ -904,8 +912,13 @@ const DivorceQuestionnaire = ({
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-white">
-      <CardHeader className="pb-0">
+    <>
+      <Helmet>
+        <title>Uncontested Divorce Questionnaire - RushDoc.com</title>
+        <meta name="description" content="Start your uncontested divorce process online with RushDoc.com's easy-to-use questionnaire." />
+      </Helmet>
+      <Card className="w-full max-w-4xl mx-auto bg-white">
+        <CardHeader className="pb-0">
         <CardTitle className="text-2xl font-bold text-center text-gray-800">
           Texas Online Divorce Application
         </CardTitle>
@@ -914,7 +927,15 @@ const DivorceQuestionnaire = ({
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
-        <ProgressTracker steps={steps} currentStep={currentStep} />
+        <ProgressTracker
+          steps={steps.map((step, index) => ({
+            ...step,
+            completed: index < currentStep,
+            current: index === currentStep,
+          }))}
+          currentStepIndex={currentStep}
+          onStepClick={setCurrentStep} // Allow clicking on completed steps
+        />
         <div className="mt-6">{renderCurrentStep()}</div>
       </CardContent>
       <CardFooter className="flex justify-between">
@@ -932,7 +953,8 @@ const DivorceQuestionnaire = ({
           {currentStep < steps.length - 1 ? "Continue" : "Submit"}
         </Button>
       </CardFooter>
-    </Card>
+      </Card>
+    </>
   );
 };
 

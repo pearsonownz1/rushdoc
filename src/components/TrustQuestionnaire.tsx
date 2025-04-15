@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   Card,
   CardContent,
@@ -724,8 +725,13 @@ const TrustQuestionnaire = ({
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-white">
-      <CardHeader className="pb-0">
+    <>
+      <Helmet>
+        <title>Estate Planning (Trusts) Questionnaire - RushDoc.com</title>
+        <meta name="description" content="Create your comprehensive trust online with RushDoc.com's guided questionnaire." />
+      </Helmet>
+      <Card className="w-full max-w-4xl mx-auto bg-white">
+        <CardHeader className="pb-0">
         <CardTitle className="text-2xl font-bold text-center text-gray-800">
           Estate Planning Trust Questionnaire
         </CardTitle>
@@ -750,7 +756,8 @@ const TrustQuestionnaire = ({
         />
         <div className="mt-6">{renderCurrentStep()}</div>
       </CardContent>
-    </Card>
+      </Card>
+    </>
   );
 };
 

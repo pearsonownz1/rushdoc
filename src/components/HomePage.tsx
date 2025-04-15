@@ -1,7 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Use combined import
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// Removed Tabs imports as they are not used in HomePage.tsx
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Shield,
   FileText,
@@ -9,28 +17,44 @@ import {
   Scale,
   CheckCircle,
   ArrowRight,
+  ChevronDown, // Keep ChevronDown
 } from "lucide-react";
-import LegalServiceCard from "./LegalServiceCard";
+import LegalServiceCard from "./LegalServiceCard"; // Keep single import
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-white">
+    <>
+      <Helmet>
+        <title>RushDoc.com - Fast & Easy Legal Document Services</title>
+        <meta name="description" content="Get affordable online legal documents for trusts, wills, and uncontested divorces quickly and easily with RushDoc.com." />
+      </Helmet>
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="border-b bg-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center space-x-2">
             <Shield className="h-8 w-8 text-primary" />
             <span className="text-xl font-bold">RushDoc.com</span>
           </div>
-          <nav className="hidden md:flex items-center space-x-6">
-            <a
-              href="#services"
-              className="text-sm font-medium hover:text-primary"
-            >
-              Services
-            </a>
+          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+             <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center hover:text-primary focus:outline-none">
+                Services <ChevronDown className="ml-1 h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem asChild>
+                  <Link to="/service/divorce">Uncontested Divorce</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/service/trust">Estate Planning (Trusts)</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/service/will">Estate Planning (Wills)</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <a
               href="#how-it-works"
               className="text-sm font-medium hover:text-primary"
@@ -56,8 +80,9 @@ const HomePage = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/10 to-background py-16 md:py-24">
+      <main>
+        {/* Hero Section */}
+        <section className="bg-gradient-to-b from-primary/10 to-background py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="text-left max-w-xl">
@@ -352,7 +377,7 @@ const HomePage = () => {
               <ul className="space-y-2 text-sm">
                 <li>
                   <a
-                    href="#"
+                    href="/trust-questionnaire"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Estate Planning (Trusts)
@@ -360,7 +385,7 @@ const HomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/will-questionnaire"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Estate Planning (Wills)
@@ -368,7 +393,7 @@ const HomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/divorce-questionnaire"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Uncontested Divorce
@@ -381,7 +406,7 @@ const HomePage = () => {
               <ul className="space-y-2 text-sm">
                 <li>
                   <a
-                    href="#"
+                    href="/estate-planning-guide"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Estate Planning Guide
@@ -389,15 +414,16 @@ const HomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/divorce-process"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Divorce Process
                   </a>
                 </li>
+                {/* TODO: Create FAQ page and link */}
                 <li>
                   <a
-                    href="#"
+                    href="#faq" // Keeping as anchor link for now
                     className="text-muted-foreground hover:text-primary"
                   >
                     Legal Document FAQ
@@ -410,7 +436,7 @@ const HomePage = () => {
               <ul className="space-y-2 text-sm">
                 <li>
                   <a
-                    href="#"
+                    href="/about"
                     className="text-muted-foreground hover:text-primary"
                   >
                     About Us
@@ -418,7 +444,7 @@ const HomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/contact"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Contact
@@ -426,7 +452,7 @@ const HomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/privacy-policy"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Privacy Policy
@@ -434,7 +460,7 @@ const HomePage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/terms-of-service"
                     className="text-muted-foreground hover:text-primary"
                   >
                     Terms of Service
@@ -455,7 +481,9 @@ const HomePage = () => {
           </div>
         </div>
       </footer>
-    </div>
+      </main>
+      </div>
+    </>
   );
 };
 

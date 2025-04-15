@@ -1,0 +1,10 @@
+# Allow all user agents to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow crawling of specific paths if needed (example)
+# Disallow: /admin/
+# Disallow: /private/
+
+# Sitemap location (update URL when deployed)
+Sitemap: http://localhost:5173/sitemap.xml

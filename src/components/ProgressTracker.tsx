@@ -27,27 +27,33 @@ const ProgressTracker = ({
   onStepClick = () => {},
 }: ProgressTrackerProps) => {
   return (
-    <div className="w-full bg-white p-4 rounded-lg shadow-sm mb-6">
-      <div className="relative">
-        {/* Progress Bar Background */}
-        <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2 z-0" />
+    <div className="w-full bg-white p-4 rounded-lg shadow-sm mb-6 flex justify-center">
+      <div className="relative flex flex-col items-center h-full min-h-[400px] py-8">
+        {/* Vertical Progress Bar Background */}
+        <div
+          className="absolute left-1/2 top-8 -translate-x-1/2 w-1 bg-gray-200 z-0"
+          style={{
+            height: `calc(100% - 4rem)`,
+          }}
+        />
 
-        {/* Progress Bar Fill */}
+        {/* Vertical Progress Bar Fill */}
         <motion.div
-          className="absolute top-1/2 left-0 h-1 bg-primary -translate-y-1/2 z-10"
-          initial={{ width: "0%" }}
+          className="absolute left-1/2 top-8 -translate-x-1/2 w-1 bg-primary z-10"
+          initial={{ height: "0%" }}
           animate={{
-            width: `${(currentStepIndex / (steps.length - 1)) * 100}%`,
+            height: `calc(${(currentStepIndex / (steps.length - 1)) * 100}% * (100% - 4rem))`,
           }}
           transition={{ duration: 0.5 }}
+          style={{ minHeight: "2rem" }}
         />
 
         {/* Steps */}
-        <div className="flex justify-between relative z-20">
+        <div className="flex flex-col items-center justify-between h-full relative z-20" style={{ height: "calc(100% - 4rem)" }}>
           {steps.map((step, index) => (
             <div
               key={step.id}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center mb-6 last:mb-0"
               onClick={() => (step.completed ? onStepClick(index) : null)}
             >
               <div
@@ -71,7 +77,8 @@ const ProgressTracker = ({
                 )}
               </div>
               <span
-                className={`mt-2 text-xs font-medium ${step.current ? "text-primary" : step.completed ? "text-gray-700" : "text-gray-400"}`}
+                className={`mt-2 text-xs font-medium text-center ${step.current ? "text-primary" : step.completed ? "text-gray-700" : "text-gray-400"}`}
+                style={{ width: "6rem" }}
               >
                 {step.label}
               </span>

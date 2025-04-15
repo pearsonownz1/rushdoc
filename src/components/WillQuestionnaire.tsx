@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   Card,
   CardContent,
@@ -23,6 +24,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { InfoIcon, AlertCircle, CheckCircle2 } from "lucide-react";
 import ProgressTracker from "./ProgressTracker";
 import QuestionnaireStep from "./QuestionnaireStep";
+import SiteHeader from "./SiteHeader";
+import SiteFooter from "./SiteFooter";
 
 interface WillQuestionnaireProps {
   onComplete?: (data: any) => void;
@@ -767,33 +770,41 @@ const WillQuestionnaire = ({
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-white">
-      <CardHeader className="pb-0">
-        <CardTitle className="text-2xl font-bold text-center text-gray-800">
-          Will Creation Questionnaire
-        </CardTitle>
-        <CardDescription className="text-center text-gray-600">
-          Complete the questionnaire below to create your personalized will
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="pt-6">
-        <ProgressTracker
-          steps={steps.map((step, index) => ({
-            id: step.id,
-            label: step.title,
-            completed: index < currentStep,
-            current: index === currentStep,
-          }))}
-          currentStepIndex={currentStep}
-          onStepClick={(index) => {
-            if (index < currentStep) {
-              setCurrentStep(index);
-            }
-          }}
-        />
-        <div className="mt-6">{renderCurrentStep()}</div>
-      </CardContent>
-    </Card>
+    <>
+      <SiteHeader />
+      <Helmet>
+        <title>Estate Planning (Wills) Questionnaire - RushDoc.com</title>
+        <meta name="description" content="Create your legally binding will online with RushDoc.com's simple questionnaire." />
+      </Helmet>
+      <Card className="w-full max-w-4xl mx-auto bg-white">
+        <CardHeader className="pb-0">
+          <CardTitle className="text-2xl font-bold text-center text-gray-800">
+            Will Creation Questionnaire
+          </CardTitle>
+          <CardDescription className="text-center text-gray-600">
+            Complete the questionnaire below to create your personalized will
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <ProgressTracker
+            steps={steps.map((step, index) => ({
+              id: step.id,
+              label: step.title,
+              completed: index < currentStep,
+              current: index === currentStep,
+            }))}
+            currentStepIndex={currentStep}
+            onStepClick={(index) => {
+              if (index < currentStep) {
+                setCurrentStep(index);
+              }
+            }}
+          />
+          <div className="mt-6">{renderCurrentStep()}</div>
+        </CardContent>
+      </Card>
+      <SiteFooter />
+    </>
   );
 };
 
